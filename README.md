@@ -1,8 +1,6 @@
 SKGroup\Rbac
 ==============
 
-Mailer wrapper over SwiftMailer for Phalcon.
-
 ## Installing ##
 
 Install composer in a common location or in your project:
