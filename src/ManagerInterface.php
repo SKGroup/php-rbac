@@ -20,37 +20,26 @@ namespace SKGroup\Rbac;
 interface ManagerInterface
 {
     /**
-     * Creates a new Role object.
-     * Note that the newly created role is not added to the RBAC system yet.
-     * You must fill in the needed data and call [[addRole()]] to add it to the system.
-     *
-     * @param string $role
-     * @return RoleInterface
-     */
-    public function createRole($role);
-
-    /**
-     * Creates a new Permission object.
-     * Note that the newly created permission is not added to the RBAC system yet.
-     * You must fill in the needed data and call [[addPermission()]] to add it to the system.
-     *
-     * @param string $permission
-     * @return PermissionInterface
-     */
-    public function createPermission($permission);
-
-    /**
      * Adds a role to the RBAC system.
      *
-     * @param RoleInterface $role
-     * @return void
+     * @param string|RoleInterface $role
+     * @param string|array|RoleInterface $inherits
+     * @return RoleInterface
      */
-    public function addRole(RoleInterface $role);
+    public function addRole($role, $inherits = null);
+
+    /**
+     * Adds a permission to the RBAC system.
+     *
+     * @param string|PermissionInterface $permission
+     * @return PermissionInterface
+     */
+    public function addPermission($permission);
 
     /**
      * Revokes a role from the RBAC system.
      *
-     * @param string|RoleInterface $role
+     * @param string $role
      * @return bool
      */
     public function revokeRole($role);
@@ -58,7 +47,7 @@ interface ManagerInterface
     /**
      * Checks if a role exists in the RBAC system.
      *
-     * @param string|RoleInterface $role
+     * @param string $role
      * @return bool
      */
     public function hasRole($role);
@@ -79,17 +68,9 @@ interface ManagerInterface
     public function getRoles();
 
     /**
-     * Adds a permission to the RBAC system.
-     *
-     * @param PermissionInterface $permission
-     * @return void
-     */
-    public function addPermission(PermissionInterface $permission);
-
-    /**
      * Revokes a permission from the RBAC system.
      *
-     * @param string|PermissionInterface $permission
+     * @param string $permission
      * @return bool
      */
     public function revokePermission($permission);
@@ -97,7 +78,7 @@ interface ManagerInterface
     /**
      * Checks if a permission exists in the RBAC system.
      *
-     * @param string|PermissionInterface $permission
+     * @param string $permission
      * @return bool
      */
     public function hasPermission($permission);
@@ -118,10 +99,11 @@ interface ManagerInterface
     public function getPermissions();
 
     /**
-     * @param string|RoleInterface $role
-     * @param string|PermissionInterface $permission
+     * @param string $role
+     * @param string $permission
+     * @param null|Array $params
      * @param null|Callable $assert
      * @return bool
      */
-    public function isGranted($role, $permission, $assert = null);
+    public function isGranted($role, $permission, Array $params = null, $assert = null);
 }
