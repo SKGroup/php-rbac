@@ -20,11 +20,6 @@ namespace SKGroup\Rbac;
 interface RuleInterface
 {
     /**
-     * @param string $name
-     */
-    public function __construct($name);
-
-    /**
      * Get the name of the Rule.
      *
      * @return string

@@ -20,11 +20,6 @@ namespace SKGroup\Rbac;
 interface PermissionInterface
 {
     /**
-     * @param string $name
-     */
-    public function __construct($name);
-
-    /**
      * Get the name of the Permission.
      *
      * @return string
@@ -32,18 +27,16 @@ interface PermissionInterface
     public function getName();
 
     /**
-     * Creates a new Rule object.
-     * Note that the newly created rule is not added to the Permission yet.
-     * You must fill in the needed data and call [[addRule()]] to add it to the system.
+     * Adds a rule callback to the Permission.
      *
-     * @param string $rule
+     * @param string $name
      * @param Callable $callback
-     * @return RuleInterface
+     * @return void
      */
-    public function createRule($rule, Callable $callback = null);
+    public function addRuleCallback($name, Callable $callback);
 
     /**
-     * Adds a role to the Permission.
+     * Adds a rule to the Permission.
      *
      * @param RuleInterface $rule
      * @return void
@@ -53,15 +46,15 @@ interface PermissionInterface
     /**
      * Checks if a rule exists in the Permission.
      *
-     * @param string|RuleInterface $rule
+     * @param string $name
      * @return bool
      */
-    public function hasRule($rule);
+    public function hasRule($name);
 
     /**
      * Revokes a rule from the Permission.
      *
-     * @param string|RuleInterface $rule
+     * @param string $rule
      * @return bool
      */
     public function revokeRule($rule);
@@ -80,4 +73,13 @@ interface PermissionInterface
      * @return RuleInterface[]
      */
     public function getRules();
+
+    /**
+     * Checks the rules for the Permission.
+     *
+     * @param string|array $rules
+     * @param array $params
+     * @return bool
+     */
+    public function checkRules($rules, Array $params = null);
 }
