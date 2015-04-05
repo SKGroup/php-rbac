@@ -20,7 +20,7 @@ use RecursiveIterator;
  * Class RecursiveIteratorAbstract
  * @package SKGroup\Rbac\SPL
  */
-class RecursiveIteratorAbstract implements \RecursiveIterator
+abstract class RecursiveIteratorAbstract implements \RecursiveIterator
 {
     /**
      * @var int

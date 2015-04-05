@@ -63,7 +63,7 @@ class Permission implements PermissionInterface
             throw new \InvalidArgumentException('Rule must be a string');
         }
 
-        $rule = new Callback($name, $callback);
+        $rule = $this->createRuleCallback($name, $callback);
         $this->addRule($rule);
     }
 
@@ -154,5 +154,15 @@ class Permission implements PermissionInterface
         }
 
         return true;
+    }
+
+    /**
+     * @param $name
+     * @param callable $callback
+     * @return RuleInterface
+     */
+    protected function createRuleCallback($name, Callable $callback)
+    {
+        return new Callback($name, $callback);
     }
 }
