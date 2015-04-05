@@ -21,9 +21,10 @@ namespace SKGroup\Rbac;
 interface RoleInterface extends \RecursiveIterator
 {
     /**
+     * @param ManagerInterface $manager
      * @param string $name
      */
-    public function __construct($name);
+    public function __construct(ManagerInterface $manager, $name);
 
     /**
      * Get the name of the Role.
@@ -35,28 +36,27 @@ interface RoleInterface extends \RecursiveIterator
     /**
      * Add permission to the role.
      *
-     * @param PermissionInterface $permission
-     * @param string|array|null $rules
+     * @param string $permission
      * @return void
      */
-    public function addPermission(PermissionInterface $permission, $rules = null);
+    public function allow($permission);
 
     /**
      * Revokes a Permission from the Role.
      *
-     * @param string|PermissionInterface $permission
+     * @param string $permission
      * @return bool
      */
-    public function revokePermission($permission);
+    public function disallow($permission);
 
     /**
      * Checks if a permission exists for this role or any child roles.
      *
-     * @param string|PermissionInterface $permission
+     * @param string $permission
      * @param array $params
      * @return bool
      */
-    public function hasPermission($permission, Array $params = null);
+    public function isGranted($permission, Array $params = null);
 
     /**
      * Returns permissions from the Role.
@@ -66,17 +66,21 @@ interface RoleInterface extends \RecursiveIterator
     public function getPermissions();
 
     /**
+     * Do a role inherit from another existing role
+     *
      * @param RoleInterface $role
      */
-    public function setParent(RoleInterface $role);
+    public function inherit(RoleInterface $role);
 
     /**
-     * @return RoleInterface
+     * @return ManagerInterface
      */
-    public function getParent();
+    public function getManager();
 
     /**
-     * @param RoleInterface $role
+     * Returns role name.
+     *
+     * @return string
      */
-    public function addChild(RoleInterface $role);
+    public function __toString();
 }
