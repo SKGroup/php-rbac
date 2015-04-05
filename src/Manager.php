@@ -41,7 +41,7 @@ class Manager implements ManagerInterface
     {
         if (is_string($role)) {
             $name = $role;
-            $role = new Role($this, $name);
+            $role = $this->createRole($name);
         } elseif ($role instanceof RoleInterface) {
             $name = $role->getName();
         } else {
@@ -73,7 +73,7 @@ class Manager implements ManagerInterface
     {
         if (is_string($permission)) {
             $name       = $permission;
-            $permission = new Permission($name);
+            $permission = $this->createPermission($name);
         } elseif ($permission instanceof PermissionInterface) {
             $name = $permission->getName();
         } else {
@@ -222,5 +222,23 @@ class Manager implements ManagerInterface
         }
 
         return $this->getRole($role)->isGranted($permission, $params);
+    }
+
+    /**
+     * @param $name
+     * @return RoleInterface
+     */
+    protected function createRole($name)
+    {
+        return new Role($this, $name);
+    }
+
+    /**
+     * @param $name
+     * @return PermissionInterface
+     */
+    protected function createPermission($name)
+    {
+        return new Permission($name);
     }
 }
